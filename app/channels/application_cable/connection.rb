@@ -2,6 +2,7 @@ module ApplicationCable
   class User
 
   end
+
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
 
