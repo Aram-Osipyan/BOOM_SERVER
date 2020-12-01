@@ -16,7 +16,7 @@ gem 'puma', '~> 5.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'redis'
-gem 'knock'
+gem 'knock', git: 'https://github.com/nsarno/knock', branch: 'master', ref: '9214cd027422df8dc31eb67c60032fbbf8fc100b'
 gem 'cancancan'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

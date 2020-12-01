@@ -1,8 +1,4 @@
 module ApplicationCable
-  class User
-
-  end
-
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
 
@@ -11,8 +7,11 @@ module ApplicationCable
     end
 
     private
+
     def find_verified_user
-      if (verified_user = User.new) #User.find_by(id: cookies.encrypted[:user_id])
+      params = request.params
+      role = params['role']&.camelize&.constantize || Player
+      if verified_user = Knock::AuthToken.new(token: params['token']).entity_for(role)
         verified_user
       else
         reject_unauthorized_connection
