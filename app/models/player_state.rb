@@ -10,7 +10,7 @@ module PlayerInfo
 
   # class for storing player state
   class State
-    @position = Position.new(0,0,0)
+    attr_accessor :id, :position
     def write_pos(player_pos )
       if player_pos.class != Position
         return
@@ -20,6 +20,11 @@ module PlayerInfo
       @position.y = player_pos.y
       @position.z = player_pos.z
     end
+
+    def initialize(id)
+      @id = id
+    end
+
   end
 
 end
