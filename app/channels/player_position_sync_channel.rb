@@ -6,16 +6,15 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
     p 'subscribed to position sync channel'
     stream_from 'some'
     # curr_id = PlayersInfo.add_player
-
+    SendPlayersPosJob.perform_now unless SendPlayersPosJob.perform?
   end
+
   # current_user.id
   def recieve(data)
     # p "data : "
     p data
-    pos =
-
-    @redis.set('pl_id',data["position"])
-    ActionCable.server.broadcast 'some', id: current_user.id, name: current_user.name
+    @redis.set("pl#{current_user.id}",data['position'])
+    # ActionCable.server.broadcast 'some', id: current_user.id, name: current_user.name
     # g = ActiveSupport::JSON.decode(data)
     # ActionCable.server.broadcast 'some', data
 
