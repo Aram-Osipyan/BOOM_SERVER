@@ -13,11 +13,16 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
   def recieve(data)
     # p "data : "
     p data
-    @redis.set("pl#{current_user.id}",data['position'])
+    value = ActiveSupport::JSON.encode ({id: current_user.id, position:  data['position']})
+    @redis.set("pl#{current_user.id}", value )
     # ActionCable.server.broadcast 'some', id: current_user.id, name: current_user.name
     # g = ActiveSupport::JSON.decode(data)
     # ActionCable.server.broadcast 'some', data
 
+  end
+
+  def unsubscribed
+    SendPlayersPosJob.stop_perfom
   end
 
   private
@@ -26,4 +31,6 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
     @redis = Redis.new(host: '127.0.0.1', port: 6379, db: 15)
     @redis.set('player_positions', []) if @redis.get('player_positions').nil?
   end
+
+
 end
