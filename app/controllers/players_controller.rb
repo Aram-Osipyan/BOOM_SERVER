@@ -1,6 +1,7 @@
 class PlayersController <  ApiBaseController
-  # authorize_resource except: :create
-  # authenticate_player except: :create
+  before_action :authenticate_player, except: :create
+  authorize_resource except: :create
+
   def create
     @player = Player.create( create_player_params )
 
@@ -10,6 +11,10 @@ class PlayersController <  ApiBaseController
     else
       render json: @player.errors, status: :bad_request
     end
+  end
+
+  def show
+    render json: current_player.to_json(except: %i[password_digest])
   end
 
   private

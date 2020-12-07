@@ -10,7 +10,7 @@ class SendPlayersPosJob < ApplicationJob
         # mes = redis.mget(redis.keys('pl[0-9]*')).map { |pos| {id=>} }
         keys = redis.keys('pl[0-9]*')
         ActionCable.server.broadcast 'some', keys.empty? ? [] : redis.mget(keys)
-        sleep 1
+        sleep 0.1
       end
     end
   end
