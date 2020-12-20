@@ -7,6 +7,7 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
     stream_from 'some'
     # curr_id = PlayersInfo.add_player
     SendPlayersPosJob.perform_now unless SendPlayersPosJob.perform?
+
   end
 
   # current_user.id
@@ -29,7 +30,8 @@ class PlayerPositionSyncChannel < ApplicationCable::Channel
 
   def init_redis
     @redis = Redis.new(host: '127.0.0.1', port: 6379, db: 15)
-    @redis.set('player_positions', []) if @redis.get('player_positions').nil?
+    # @redis.set('player_positions', []) if @redis.get('player_positions').nil?
+    # @redis.flushdb
   end
 
 

@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   mount ActionCable.server, at: '/cable'
   resource :player
   post :player_token, to: 'player_token#create'
-
+  post :room, to: 'room#create'
+  get :room, to: 'room#show'
 end
