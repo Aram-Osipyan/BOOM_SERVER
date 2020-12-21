@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   resource :player
   post :player_token, to: 'player_token#create'
   post :room, to: 'room#create'
-  get :room, to: 'room#show'
+  get '/room', to: 'room#show'
+  post '/room/subscribe', to: 'room#subscribe_to_room'
 end
